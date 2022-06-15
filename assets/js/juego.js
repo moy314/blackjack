@@ -23,15 +23,17 @@ const crearDeck = ()=>{
 
 
 
-for(let tipo of tipos){
-    for(let especial of especiales){
-        deck.push(tipo + especial);
+    for(let tipo of tipos){
+        for(let especial of especiales){
+            deck.push(tipo + especial);
 
+        }
     }
-}
 
-console.log(deck);
-
+    console.log(deck);
+    deck = _.shuffle(deck);
+    console.log(deck);
+        return deck
 
 }
 
