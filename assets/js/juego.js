@@ -19,8 +19,10 @@ let puntosJugador = 0,
 
 const btnPedir = document.querySelector('#btnPedir');
 const marcadores = document.querySelectorAll('small');
-// console.log(marcadorJugador);
-//console.log(btnPedir);
+
+const jugadorCartas = document.querySelector('.jugador-cartas');
+console.log(jugadorCartas);
+
 
 
 
@@ -41,12 +43,12 @@ const crearDeck = ()=>{
 
     for(let tipo of tipos){
         for(let especial of especiales){
-            deck.push(tipo + especial);
+            deck.push( especial + tipo );
 
         }
     }
 
-    //console.log(deck);
+    console.log(deck);
     deck = _.shuffle(deck);
      console.log(deck);
         return deck
@@ -74,22 +76,7 @@ const pedirCarta = () =>{
 
 
 };
-// VALOR CARTA
-// const valorCarta = (carta) => {
-//     let puntos = 0;
-//     const valor = carta.substring(0,carta.length -1);
-//     console.log( valor );
 
-//     if( isNaN( valor )){
-//         puntos = (valor === "A") ? 11 : 10;
-//         console.log("No es un numero");
-//     }else{
-//         console.log("sí es un numero");
-//         puntos = parseInt( valor )
-//     }
-//     console.log(puntos);
-    
-// }
 
 
 const valorCarta = ( carta ) =>{
@@ -100,10 +87,6 @@ const valorCarta = ( carta ) =>{
 
 }
 
-// const carta = pedirCarta()
-// console.log(carta);
-// const valor = valorCarta(carta)
-// console.log(valor); 
 
 
 
@@ -111,13 +94,25 @@ const valorCarta = ( carta ) =>{
 btnPedir.addEventListener('click', () => {
 
      const carta = pedirCarta()
-    // console.log(carta);
-    // const valor = valorCarta(carta)
-    // console.log(valor);
-    // const valor = valorCarta(pedirCarta()); 
+   
     puntosJugador = valorCarta(carta) + puntosJugador;
-    console.log(`los puntos acumulados son : ${puntosJugador}`);
     marcadores[0].innerHTML = puntosJugador;
+    const imagenCarta = document.createElement('img');
+   
+    imagenCarta.src = `assets/cartas/${carta}.png`;
+    imagenCarta.classList.add('carta');
+    
+    jugadorCartas.append(imagenCarta);
+
+    if(puntosJugador > 21){
+        console.warn('perdiste,mi perro');
+        btnPedir.disabled = true;
+    }else if(puntosJugador == 21){
+        console.log('ya ganaste,perrín');
+        btnPedir.disabled = true;
+    }
+
+
 
 
 })
