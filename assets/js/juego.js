@@ -11,17 +11,21 @@ const tipos      = ['C','D','H','S'];
 const especiales = ['A','J','Q','K'];
 
 let puntosJugador = 0,
-    puntosComputadora;
+    puntosComputadora = 0;
 
 
 
 //REFERENCIAS A ELEMENTOS
 
-const btnPedir = document.querySelector('#btnPedir');
-const marcadores = document.querySelectorAll('small');
+const btnPedir          = document.querySelector('#btnPedir');
+const btnDetener        = document.querySelector('#btnDetener');
 
-const jugadorCartas = document.querySelector('.jugador-cartas');
-console.log(jugadorCartas);
+
+const marcadores        = document.querySelectorAll('small');
+
+const jugadorCartas     = document.querySelector('.jugador-cartas');
+const computadoraCartas = document.querySelector('.computadora-cartas');
+console.log(computadoraCartas);
 
 
 
@@ -87,6 +91,28 @@ const valorCarta = ( carta ) =>{
 
 }
 
+//TURNO  DE LA COMPURADOTA
+
+const trunoComputadora = (puntosMinimos ) => {
+
+    do{
+        const carta = pedirCarta();
+        puntosComputadora = valorCarta(carta) + puntosComputadora;
+        marcadores[1].innerHTML = puntosComputadora;
+        const imagenCarta = document.createElement('img');
+        imagenCarta.src = `assets/cartas/${carta}.png`;
+        imagenCarta.classList.add('carta');
+        computadoraCartas.append(imagenCarta);
+        
+        if (puntosMinimos > 21){
+
+            break;
+        }
+
+    } while((puntosComputadora < puntosMinimos && (puntosMinimos <= 21)));
+
+
+}
 
 
 
@@ -95,7 +121,7 @@ btnPedir.addEventListener('click', () => {
 
      const carta = pedirCarta()
    
-    puntosJugador = valorCarta(carta) + puntosJugador;
+     puntosJugador = valorCarta(carta) + puntosJugador;
     marcadores[0].innerHTML = puntosJugador;
     const imagenCarta = document.createElement('img');
    
@@ -106,10 +132,15 @@ btnPedir.addEventListener('click', () => {
 
     if(puntosJugador > 21){
         console.warn('perdiste,mi perro');
-        btnPedir.disabled = true;
+        trunoComputadora(puntosJugador);
+        btnDetener.disabled = true;
+        btnPedir.disabled   = true;
+        trunoComputadora(puntosJugador);
     }else if(puntosJugador == 21){
         console.log('ya ganaste,perrín');
-        btnPedir.disabled = true;
+        btnDetener.disabled = true;
+        btnPedir.disabled   = true;
+        trunoComputadora(puntosJugador);
     }
 
 
@@ -117,13 +148,19 @@ btnPedir.addEventListener('click', () => {
 
 })
 
+btnDetener.addEventListener('click',()=>{
+
+    btnDetener.disabled = true;
+    btnPedir.disabled   = true;
+
+    if(puntosJugador != 21){
+
+        trunoComputadora(puntosJugador);
+    }else{
+
+        console.log('el jugador ganó');
+    }
 
 
+})
 
-
-
-
-// deck = [];
-
-// console.log(pedirCarta());
-// console.log(deck);
