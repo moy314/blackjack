@@ -91,6 +91,8 @@ const valorCarta = ( carta ) =>{
 
 }
 
+
+
 //TURNO  DE LA COMPURADOTA
 
 const trunoComputadora = (puntosMinimos ) => {
@@ -103,13 +105,36 @@ const trunoComputadora = (puntosMinimos ) => {
         imagenCarta.src = `assets/cartas/${carta}.png`;
         imagenCarta.classList.add('carta');
         computadoraCartas.append(imagenCarta);
+
+
         
         if (puntosMinimos > 21){
-
+            
             break;
         }
 
-    } while((puntosComputadora < puntosMinimos && (puntosMinimos <= 21)));
+    } while((puntosComputadora < puntosMinimos) && (puntosMinimos <= 21));
+
+    setTimeout( ()=>{
+
+        if(puntosComputadora === puntosMinimos){
+
+            alert('nadie gana,perros');
+            
+        }else if( puntosMinimos > 21 ){
+
+            alert('computadora gana'); 
+
+        }else if( puntosComputadora > 21 ){
+
+            alert('jugador gana');
+
+        }else {
+
+            alert('nadie gana');
+        }
+
+    },500);
 
 
 }
@@ -153,14 +178,11 @@ btnDetener.addEventListener('click',()=>{
     btnDetener.disabled = true;
     btnPedir.disabled   = true;
 
-    if(puntosJugador != 21){
-
-        trunoComputadora(puntosJugador);
-    }else{
-
-        console.log('el jugador ganó');
-    }
+    trunoComputadora(puntosJugador);
+    
 
 
 })
+
+// ganador(puntosComputadora,puntosJugador);
 
