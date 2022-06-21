@@ -6,12 +6,12 @@
 
 //crear DECK
 
-let deck         = [];
-const tipos      = ['C','D','H','S'];
-const especiales = ['A','J','Q','K'];
+let deck                = [];
+const tipos             = ['C','D','H','S'];
+const especiales        = ['A','J','Q','K'];
 
-let puntosJugador = 0,
-    puntosComputadora = 0;
+let puntosJugador       = 0,
+    puntosComputadora   = 0;
 
 
 
@@ -19,13 +19,14 @@ let puntosJugador = 0,
 
 const btnPedir          = document.querySelector('#btnPedir');
 const btnDetener        = document.querySelector('#btnDetener');
+const btnNuevo          = document.querySelector('#btnNuevo');
+
 
 
 const marcadores        = document.querySelectorAll('small');
 
 const jugadorCartas     = document.querySelector('.jugador-cartas');
 const computadoraCartas = document.querySelector('.computadora-cartas');
-console.log(computadoraCartas);
 
 
 
@@ -98,11 +99,11 @@ const valorCarta = ( carta ) =>{
 const trunoComputadora = (puntosMinimos ) => {
 
     do{
-        const carta = pedirCarta();
-        puntosComputadora = valorCarta(carta) + puntosComputadora;
+        const carta             = pedirCarta();
+        puntosComputadora       = valorCarta(carta) + puntosComputadora;
         marcadores[1].innerHTML = puntosComputadora;
-        const imagenCarta = document.createElement('img');
-        imagenCarta.src = `assets/cartas/${carta}.png`;
+        const imagenCarta       = document.createElement('img');
+        imagenCarta.src         = `assets/cartas/${carta}.png`;
         imagenCarta.classList.add('carta');
         computadoraCartas.append(imagenCarta);
 
@@ -144,13 +145,13 @@ const trunoComputadora = (puntosMinimos ) => {
 //EVENTOS
 btnPedir.addEventListener('click', () => {
 
-     const carta = pedirCarta()
+     const carta            = pedirCarta()
    
-     puntosJugador = valorCarta(carta) + puntosJugador;
+     puntosJugador          = valorCarta(carta) + puntosJugador;
     marcadores[0].innerHTML = puntosJugador;
-    const imagenCarta = document.createElement('img');
+    const imagenCarta       = document.createElement('img');
    
-    imagenCarta.src = `assets/cartas/${carta}.png`;
+    imagenCarta.src         = `assets/cartas/${carta}.png`;
     imagenCarta.classList.add('carta');
     
     jugadorCartas.append(imagenCarta);
@@ -183,6 +184,27 @@ btnDetener.addEventListener('click',()=>{
 
 
 })
+
+
+btnNuevo.addEventListener('click',()=>{
+    deck = [];
+    deck = crearDeck();
+
+    puntosComputadora   = 0;
+    puntosJugador       = 0;
+    
+    marcadores[0].innerHTML = 0;
+    marcadores[1].innerHTML = 0;
+    
+    jugadorCartas.innerHTML     = '';
+    computadoraCartas.innerHTML = '';
+
+    btnPedir.disabled     = false;
+    btnDetener.disabled   = false;
+
+
+})
+
 
 // ganador(puntosComputadora,puntosJugador);
 
